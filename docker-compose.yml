@@ -32,17 +32,6 @@ services:
     # volumes:
     #   - redis_data:/data
 
-  # Maildev SMTP testing server
-  maildev:
-    image: maildev/maildev:2.2.1
-    restart: always
-    ports:
-      - '${MAILDEV_WEB_PORT:-1080}:1080' # Web interface
-      - '${MAILDEV_SMTP_PORT:-1025}:1025' # SMTP server
-    environment:
-      - MAILDEV_WEB_PORT=${MAILDEV_WEB_PORT:-1080}
-      - MAILDEV_SMTP_PORT=${MAILDEV_SMTP_PORT:-1025}
-
 volumes:
   postgres_data:
     name: fullstack_postgres_data

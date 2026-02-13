@@ -2,7 +2,7 @@
 
 ## Development Setup
 
-- **Infrastructure** (Postgres, Redis, Maildev): Docker. **Applications** (Next.js, NestJS): run on host via `npm run dev` for HMR and debugging.
+- **Infrastructure** (Postgres, Redis): Docker. **Applications** (Vite frontend, NestJS): run on host via `npm run dev` for HMR and debugging.
 
 Start infra (from root):
 
@@ -22,7 +22,7 @@ npm run dev:all        # start infra then dev in one command
 Per-app (from root):
 
 ```bash
-cd apps/nextjs-frontend && npm run dev   # port 3000
+cd apps/vite-frontend && npm run dev     # frontend (e.g. port 5173)
 cd apps/nestjs-backend && npm run dev    # port 4000
 ```
 
@@ -41,9 +41,9 @@ npm run infra:ps
 - Build: `npm run build`
 - Run production: `npm run start:prod`
   - Backend: default port 4000
-  - Frontend: default port 3000
+  - Frontend: default port (Vite, e.g. 5173)
 
-Containerized builds (e.g. CI/CD): use Dockerfiles in `deploy/` (`deploy/nextjs-frontend.dockerfile`, `deploy/nestjs-backend.dockerfile`) if needed; not required for daily dev.
+Containerized builds (e.g. CI/CD): use `deploy/vite-frontend.dockerfile`, `deploy/vite-frontend.nginx.conf`, and `deploy/nestjs-backend.dockerfile` as needed; not required for daily dev.
 
 ## Monitoring and Alerts
 
@@ -52,16 +52,16 @@ Containerized builds (e.g. CI/CD): use Dockerfiles in `deploy/` (`deploy/nextjs-
 
 ## Common Issues and Fixes
 
-| Issue                                    | Fix                                                                                      |
-| ---------------------------------------- | ---------------------------------------------------------------------------------------- |
-| App can't connect to DB on first run     | Wait for Postgres (5–10s); `npm run infra:health` until `healthy`.                       |
-| Port 5432 already in use                 | Stop other Postgres or change `POSTGRES_PORT` in root `.env` and restart infra.          |
-| Next dev lock / "Unable to acquire lock" | Stop other `next dev`; remove `apps/nextjs-frontend/.next/dev/lock` if stuck.            |
-| Migration fails                          | Infra running; `DATABASE_URL` in `apps/nestjs-backend/.env` matches root `.env`.         |
-| CORS errors                              | Set `FRONTEND_HOST` in `apps/nestjs-backend/.env` to frontend origin.                    |
-| Redis connection failed                  | `npm run infra:health`; `npm run infra:restart` if needed.                               |
-| Shared package not found                 | Build packages: e.g. `cd packages/db && npm run build`; root `npm run build` builds all. |
-| Port 3000 or 4000 in use                 | Stop conflicting process or change `PORT` (backend) / use different port for `next dev`. |
+| Issue                                        | Fix                                                                                          |
+| -------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| App can't connect to DB on first run         | Wait for Postgres (5–10s); `npm run infra:health` until `healthy`.                           |
+| Port 5432 already in use                     | Stop other Postgres or change `POSTGRES_PORT` in root `.env` and restart infra.              |
+| Frontend dev lock / "Unable to acquire lock" | Stop other dev servers; remove any lock files in `apps/vite-frontend` if stuck.              |
+| Migration fails                              | Infra running; `DATABASE_URL` in `apps/nestjs-backend/.env` matches root `.env`.             |
+| CORS errors                                  | Set `FRONTEND_HOST` in `apps/nestjs-backend/.env` to frontend origin.                        |
+| Redis connection failed                      | `npm run infra:health`; `npm run infra:restart` if needed.                                   |
+| Shared package not found                     | Build packages: e.g. `cd packages/db && npm run build`; root `npm run build` builds all.     |
+| Port 5173 or 4000 in use                     | Stop conflicting process or change `PORT` (backend) / configure Vite server port (frontend). |
 
 ## Database Operations
 

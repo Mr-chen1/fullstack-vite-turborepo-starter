@@ -1,3 +1,5 @@
+import {resolve} from 'node:path';
+import {config} from 'dotenv';
 import {Logger, ValidationPipe} from '@nestjs/common';
 import {NestFactory} from '@nestjs/core';
 import {DocumentBuilder, OpenAPIObject, SwaggerModule} from '@nestjs/swagger';
@@ -6,6 +8,14 @@ import helmet from 'helmet';
 import {AppModule} from './app.module';
 import {PrismaExceptionFilter} from './common/filters/prisma-exception/prisma-exception.filter';
 import {Logger as LoggerService} from './common/logger/logger.service';
+
+for (const p of [
+  resolve(process.cwd(), '../../.env.example'),
+  resolve(process.cwd(), '../../.env'),
+  resolve(process.cwd(), '.env.example'),
+  resolve(process.cwd(), '.env'),
+])
+  config({path: p, override: true, quiet: true});
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule, {

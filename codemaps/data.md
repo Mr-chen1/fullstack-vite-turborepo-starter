@@ -1,45 +1,42 @@
 # Data Models & Schemas
 
-**Updated:** 2025-02-13
+**Updated:** 2026-02-13
 
 ## Database Models (Prisma)
 
 ### Schema Location
 
-- `packages/db/prisma/schema.prisma`
-- All models defined in Prisma schema format
+- packages/db/prisma/schema.prisma
+- Migrations: packages/db/prisma/migrations/
 
-### Dummy Model
+### Models
 
-- Base fields: `id` (UUID), `createdAt`, `updatedAt`
-- Placeholder model (remove when adding real models)
-- All models should include these base fields for consistency
+- Dummy: id (UUID), createdAt, updatedAt (placeholder)
+- mikro_orm_migrations: @@ignore (compatibility)
 
 ## Config Schemas
 
 ### ConfigKey (Backend)
 
-- `config/config-key.enum.ts`
-- Keys: NODE*ENV, FRONTEND_HOST, PORT, ENABLE_SWAGGER, POSTGRES*\_, REDIS\_\_, MAIL\_\*, MAILDEV_WEB_PORT
+- config/config-key.enum.ts
+- Keys: NODE*ENV, FRONTEND_HOST, PORT, ENABLE_SWAGGER, POSTGRES*\_, REDIS\_\_
 
 ### Validation (Backend)
 
-- `config/validation.schema.ts`
-- Joi schema for env vars
+- config/validation.schema.ts — Joi schema for env vars
 
-## Frontend Types
+## Frontend Types (vite-frontend)
 
-- `FloatLabelInputTextProps` → `components/float-label-input-text/types/`
-- `ErrorResponse` (backend) → `common/filters/prisma-exception/types/`
+- FloatLabelInputTextProps → components/float-label-input-text/types/
+- ErrorResponse (backend): nestjs-backend common/filters/prisma-exception/types/
 
 ## Shared Packages
 
-### `packages/shared`
+### packages/shared
 
-- `packages/shared/src/index.ts` — empty, reserved for shared DTOs/types
+- src/index.ts — empty; reserved for shared DTOs/types
 
-### `packages/db`
+### packages/db
 
-- Prisma ORM setup and configuration
-- Centralized database schema and migrations
-- Exports: `PrismaClient`, `PrismaService`, `PrismaModule`
+- Prisma schema and migrations
+- Exports: PrismaClient, PrismaService, PrismaModule

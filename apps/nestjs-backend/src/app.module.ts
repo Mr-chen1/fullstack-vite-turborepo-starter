@@ -7,13 +7,13 @@ import {PrismaModule} from '@next-nest-turbo-auth-boilerplate/db';
 import {CommonModule} from './common/common.module';
 import appConfig from './config/app.config';
 import validationSchema from './config/validation.schema';
-import {EmailModule} from './email/email.module';
 import {HealthModule} from './health/health.module';
 import {RedisModule} from './redis/redis.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
+      envFilePath: ['.env', '../../.env'],
       validationSchema,
       load: [appConfig],
     }),
@@ -29,7 +29,6 @@ import {RedisModule} from './redis/redis.module';
       ],
     }),
     CommonModule,
-    EmailModule,
     HealthModule,
     RedisModule,
   ],
