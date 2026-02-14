@@ -25,15 +25,15 @@ packages/
 
 ## Build Pipeline
 
-- turbo.json: build depends on ^build and ^db:generate
-- Outputs: dist/\*\* (backend + frontend), node_modules/.prisma/client (db)
-- Tasks: build, db:generate, dev, start:dev, start:prod, lint, lint:fix, format, test:unit, test:unit:cov, test:e2e
+- **turbo.json** - build depends on ^build and ^db:generate
+- **Outputs:** dist/\*\* (backend + frontend), node_modules/.prisma/client (db)
+- **Tasks:** build, db:generate, dev, start:dev, start:prod, lint, lint:fix, format, test:unit, test:unit:cov, test:e2e
 
 ## Cross-App
 
-- API prefix: /api
-- CORS: FRONTEND_HOST (e.g. http://localhost:5173 for Vite dev)
-- Swagger: /api/docs (when ENABLE_SWAGGER=true)
+- **API prefix:** /api
+- **CORS:** FRONTEND_HOST (e.g. http://localhost:5173 for Vite dev)
+- **Swagger:** /api/docs (when ENABLE_SWAGGER=true)
 
 ## Deploy
 
