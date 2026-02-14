@@ -7,7 +7,7 @@ export type HeaderDecoratorParam =
   };
 
 // Configuration interface for header validation
-type HeaderValidationOptions = {
+export type HeaderValidationOptions = {
   /**
    * Expected value(s) for the header
    */
