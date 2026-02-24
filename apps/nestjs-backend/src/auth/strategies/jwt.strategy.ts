@@ -18,7 +18,11 @@ const extractJwtFromCookie = (req: Request): string | undefined =>
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(configService: ConfigService) {
     super({
-      jwtFromRequest: ExtractJwt.fromExtractors([extractJwtFromCookie, ExtractJwt.fromAuthHeaderAsBearerToken()]),
+      jwtFromRequest: ExtractJwt.fromExtractors([
+        // passport-jwt expects string | null; project lint disallows null in types
+        (req: Request): string | null => extractJwtFromCookie(req) ?? null, // eslint-disable-line @typescript-eslint/no-restricted-types
+        ExtractJwt.fromAuthHeaderAsBearerToken(),
+      ]),
       ignoreExpiration: false,
       secretOrKey: configService.getOrThrow<string>(ConfigKey.JWT_SECRET),
     });
