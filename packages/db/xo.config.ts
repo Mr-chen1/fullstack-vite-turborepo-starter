@@ -1,6 +1,8 @@
 const xoConfig = [
   {
-    ignores: ['node_modules', 'dist'],
+    ignores: ['node_modules', 'dist', 'prisma/**'],
+  },
+  {
     prettier: 'compat',
     space: true,
     rules: {

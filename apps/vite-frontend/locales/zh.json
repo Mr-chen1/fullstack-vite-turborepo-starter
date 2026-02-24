@@ -50,5 +50,19 @@
     "home": {
       "title": "欢迎使用 Vite - NestJS - Turbo Boilerplate"
     }
+  },
+  "auth": {
+    "login": "登录",
+    "register": "注册",
+    "email": "邮箱",
+    "password": "密码",
+    "confirmPassword": "确认密码",
+    "noAccount": "没有账号？",
+    "haveAccount": "已有账号？",
+    "loginFailed": "邮箱或密码错误。",
+    "registerFailed": "注册失败，请重试。"
+  },
+  "common": {
+    "loading": "加载中..."
   }
 }

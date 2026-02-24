@@ -9,10 +9,13 @@ import appConfig from './config/app.config';
 import validationSchema from './config/validation.schema';
 import {HealthModule} from './health/health.module';
 import {RedisModule} from './redis/redis.module';
+import {AuthModule} from './auth/auth.module';
+import {UsersModule} from './users/users.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
+      isGlobal: true,
       envFilePath: ['.env', '../../.env'],
       validationSchema,
       load: [appConfig],
@@ -31,6 +34,8 @@ import {RedisModule} from './redis/redis.module';
     CommonModule,
     HealthModule,
     RedisModule,
+    AuthModule,
+    UsersModule,
   ],
   providers: [
     {

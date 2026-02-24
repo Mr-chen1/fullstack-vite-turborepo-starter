@@ -50,5 +50,19 @@
     "home": {
       "title": "Welcome to Vite - NestJS - Turbo Boilerplate"
     }
+  },
+  "auth": {
+    "login": "Sign In",
+    "register": "Sign Up",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "noAccount": "Don't have an account?",
+    "haveAccount": "Already have an account?",
+    "loginFailed": "Invalid email or password.",
+    "registerFailed": "Registration failed. Please try again."
+  },
+  "common": {
+    "loading": "Loading..."
   }
 }

@@ -20,6 +20,9 @@ const validationSchemaMap: Record<ConfigKey, Joi.Schema> = {
   [ConfigKey.REDIS_HOST]: Joi.string().optional().default('localhost'),
   [ConfigKey.REDIS_PORT]: Joi.number().min(0).max(65_535).default(6379),
   [ConfigKey.REDIS_PASSWORD]: Joi.string().optional().allow('', null),
+
+  [ConfigKey.JWT_SECRET]: Joi.string().min(32).required(),
+  [ConfigKey.JWT_EXPIRES_IN]: Joi.string().default('7d'),
 };
 
 export default Joi.object(validationSchemaMap);

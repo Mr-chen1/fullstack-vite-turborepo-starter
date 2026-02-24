@@ -4,8 +4,10 @@ import {Logger, ValidationPipe} from '@nestjs/common';
 import {NestFactory} from '@nestjs/core';
 import {DocumentBuilder, OpenAPIObject, SwaggerModule} from '@nestjs/swagger';
 import * as cookieParser from 'cookie-parser';
+import * as compression from 'compression';
 import helmet from 'helmet';
 import {AppModule} from './app.module';
+import {HttpExceptionFilter} from './common/filters/http-exception/http-exception.filter';
 import {PrismaExceptionFilter} from './common/filters/prisma-exception/prisma-exception.filter';
 import {Logger as LoggerService} from './common/logger/logger.service';
 
@@ -23,6 +25,7 @@ async function bootstrap(): Promise<void> {
   });
 
   app.use(helmet());
+  app.use(compression());
 
   app.enableCors({
     origin: process.env.FRONTEND_HOST,
@@ -41,9 +44,9 @@ async function bootstrap(): Promise<void> {
 
   app.use(cookieParser());
 
-  app.setGlobalPrefix('api');
+  app.setGlobalPrefix('api/v1');
 
-  app.useGlobalFilters(new PrismaExceptionFilter());
+  app.useGlobalFilters(new HttpExceptionFilter(), new PrismaExceptionFilter());
 
   if (process.env.ENABLE_SWAGGER === 'true') {
     const swaggerConfig = new DocumentBuilder()

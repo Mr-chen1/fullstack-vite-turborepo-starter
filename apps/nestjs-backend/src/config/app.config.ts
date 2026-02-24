@@ -19,6 +19,9 @@ const appConfig = (): Record<ConfigKey, unknown> => ({
   [ConfigKey.REDIS_HOST]: process.env.REDIS_HOST,
   [ConfigKey.REDIS_PORT]: Number(process.env.REDIS_PORT),
   [ConfigKey.REDIS_PASSWORD]: process.env.REDIS_PASSWORD,
+
+  [ConfigKey.JWT_SECRET]: process.env.JWT_SECRET,
+  [ConfigKey.JWT_EXPIRES_IN]: process.env.JWT_EXPIRES_IN ?? '7d',
 });
 
 export default appConfig;
