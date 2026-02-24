@@ -4,6 +4,8 @@
 const fs = require('fs');
 const path = require('path');
 
+const { execSync } = require('child_process');
+
 async function main() {
   if (!process.stdin.isTTY) {
     console.error('当前终端不是交互式 TTY，无法运行 init。请在真实终端里执行：npm run init');
@@ -16,6 +18,36 @@ async function main() {
   const inquirer = inquirerModule.default || inquirerModule;
 
   const root = path.join(__dirname, '..');
+
+  function fileExists(filePath) {
+    try {
+      fs.accessSync(filePath, fs.constants.F_OK);
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+  function copyFile(src, dest, { overwrite }) {
+    if (!fileExists(src)) {
+      console.warn(`跳过：未找到 ${src}`);
+      return { copied: false, reason: 'src-missing' };
+    }
+
+    if (fileExists(dest) && !overwrite) {
+      console.log(`跳过：已存在 ${dest}`);
+      return { copied: false, reason: 'dest-exists' };
+    }
+
+    fs.mkdirSync(path.dirname(dest), { recursive: true });
+    fs.copyFileSync(src, dest);
+    console.log(`已复制: ${src} -> ${dest}`);
+    return { copied: true };
+  }
+
+  function run(command, { cwd }) {
+    execSync(command, { cwd, stdio: 'inherit' });
+  }
 
   function readJson(jsonPath) {
     return JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
@@ -155,13 +187,43 @@ async function main() {
   console.log(`已修改: ${pkgPaths.shared}`);
   console.log('workspace 的 package.json 已更新（不会再扫描 node_modules）。');
 
+  const pairs = [
+    {
+      src: path.join(root, '.env.example'),
+      dest: path.join(root, '.env'),
+    },
+    {
+      src: path.join(root, 'apps', 'vite-frontend', '.env.example'),
+      dest: path.join(root, 'apps', 'vite-frontend', '.env'),
+    },
+    {
+      src: path.join(root, 'apps', 'nestjs-backend', '.env.example'),
+      dest: path.join(root, 'apps', 'nestjs-backend', '.env'),
+    },
+  ];
+
+  for (const { src, dest } of pairs) {
+    copyFile(src, dest, { overwrite: false });
+  }
+
+  try {
+    console.log('开始构建 packages/db ...');
+    run('npm run build -w packages/db', { cwd: root });
+    console.log('开始构建 packages/shared ...');
+    run('npm run build -w packages/shared', { cwd: root });
+    console.log('构建完成。');
+  } catch (err) {
+    console.error('构建失败：', err.message);
+    process.exitCode = 1;
+    return;
+  }
+
   if (initGit) {
-    const { execSync } = require('child_process');
     try {
       if (resetGit) {
         fs.rmSync(path.join(root, '.git'), { recursive: true, force: true });
       }
-      execSync('git init', { cwd: root, stdio: 'inherit' });
+      run('git init', { cwd: root });
       console.log('已初始化新的 Git 仓库。');
     } catch (err) {
       console.error('初始化 Git 仓库失败：', err.message);
