@@ -14,15 +14,15 @@ Monorepo: **Vite** frontend and **NestJS** backend, managed with **Turborepo**. 
 git clone <your-repo-url>
 cd fullstack-vite-turborepo-starter
 npm install
+npm run init # Interactive setup (scope, git init, etc.)
 
-cp .env.example .env
-cp apps/vite-frontend/.env.example apps/vite-frontend/.env
-cp apps/nestjs-backend/.env.example apps/nestjs-backend/.env
+# init can also generate .env files (from .env.example) and build shared packages
 
 npm run infra:start
 npm run infra:health   # wait until healthy
 
-npm run build --workspace=@next-nest-turbo-auth-boilerplate/db && npm run build --workspace=@next-nest-turbo-auth-boilerplate/shared
+# (Optional) If you skipped it in init:
+# npm run build -w packages/db && npm run build -w packages/shared
 npm run dev
 ```
 
@@ -35,8 +35,10 @@ Edit `apps/nestjs-backend/.env` so `DATABASE_URL` matches the Postgres settings 
 1. Clone, then `npm install`.
 2. Copy `.env.example` → `.env` in repo root, `apps/vite-frontend`, and `apps/nestjs-backend`.
 3. `npm run infra:start` then `npm run infra:health` (Docker: Postgres, Redis).
-4. `npm run build --workspace=@next-nest-turbo-auth-boilerplate/db && npm run build --workspace=@next-nest-turbo-auth-boilerplate/shared`
+4. `npm run build -w packages/db && npm run build -w packages/shared`
 5. `npm run dev` (Vite + NestJS in parallel).
+
+Note: `npm run init` can generate the `.env` files and run step 4 for you.
 
 Infrastructure runs in Docker; apps run on the host for HMR and debugging.
 
