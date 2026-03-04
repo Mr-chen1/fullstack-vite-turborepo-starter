@@ -1,0 +1,67 @@
+---
+description: UI/UX rules (UI-UX Pro Max skill) for Vite React frontend only
+globs:
+  - '**/*.{tsx,ts,css,scss}'
+alwaysApply: true
+---
+
+# UI/UX Rules (Frontend only)
+
+## Scope (IMPORTANT)
+
+Applies ONLY to frontend UI implementation:
+
+- Layout, spacing, typography, color, visuals
+- Components and pages (React)
+- Interaction patterns and UI states
+- Accessibility (a11y)
+
+Does NOT override:
+
+- API contracts (`fullstack-contracts.mdc`)
+- Security requirements (`security.mdc`)
+- Testing requirements (`testing.mdc`)
+- Universal code quality (`code-style.mdc`)
+- Frontend architecture rules (`frontend-standards.mdc`)
+
+## Use the installed skill
+
+When building UI, strictly follow the UI/UX Pro Max skill installed in this repo under `.cursor/`.
+
+## Required UI states (must)
+
+For every async UI:
+
+- loading (prefer skeleton)
+- empty
+- error (actionable message + retry)
+
+For every form:
+
+- field-level validation messages
+- disabled states
+- submit-in-progress state
+- success/failure feedback
+
+## Accessibility (must)
+
+- Keyboard navigable
+- Visible focus states
+- aria-label for icon-only buttons
+- Maintain readable contrast
+- Avoid relying on color alone to convey meaning
+
+## Layout & hierarchy (must)
+
+- Mobile-first responsive layout
+- Consistent spacing scale (avoid random pixel values)
+- Clear information hierarchy (titles > sections > body)
+- Use subtle elevation and separators for grouping (bento-like grouping is OK)
+
+## Output format (preferred)
+
+Before coding:
+
+1. Component breakdown + state design
+   Then:
+2. Provide file-level changes with clear paths

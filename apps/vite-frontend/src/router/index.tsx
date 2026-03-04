@@ -1,5 +1,5 @@
 import {createBrowserRouter, Navigate} from 'react-router-dom';
-import {Home} from '../pages/Home.tsx';
+import {ScrollDemo} from '../pages/ScrollDemo.tsx';
 import {ErrorBoundary} from '../pages/ErrorBoundary.tsx';
 import {NotFound} from '../pages/NotFound.tsx';
 import {LoginPage} from '../pages/auth/LoginPage.tsx';
@@ -20,13 +20,14 @@ export const router = createBrowserRouter([
     children: [
       {
         element: <MainLayout />,
-        children: [{index: true, element: <Home />}],
+        children: [{index: true, element: <ScrollDemo />}],
       },
       {
         element: <BareLayout />,
         children: [
           {path: 'login', element: <LoginPage />},
           {path: 'register', element: <RegisterPage />},
+          {path: 'scroll-demo', element: <ScrollDemo />},
         ],
       },
     ],
