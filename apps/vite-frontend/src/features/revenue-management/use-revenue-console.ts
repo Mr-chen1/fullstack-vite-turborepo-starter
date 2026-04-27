@@ -6,7 +6,7 @@ import {
   type RecommendationDecision,
   type RecommendationSummary,
 } from '@next-nest-turbo-auth-boilerplate/shared';
-import {revenueKeys} from './query-keys';
+import {revenueKeys} from './query-keys.ts';
 import {
   createMonitoringJobApi,
   getMonitoringJobApi,

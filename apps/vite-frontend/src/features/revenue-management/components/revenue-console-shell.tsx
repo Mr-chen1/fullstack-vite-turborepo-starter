@@ -1,4 +1,4 @@
-import {useRevenueConsole} from '../use-revenue-console';
+import {useRevenueConsole} from '../use-revenue-console.ts';
 import {AgentWorkflowPanel} from './agent-workflow-panel.tsx';
 import {HotelListPanel} from './hotel-list-panel.tsx';
 import {MonitoringDetailPanel} from './monitoring-detail-panel.tsx';

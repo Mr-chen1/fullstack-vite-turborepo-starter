@@ -8,7 +8,7 @@ import {defaultLocale} from '@/i18n/constants.ts';
 import {getLocalePath} from '@/i18n/navigation.ts';
 
 const RevenueManagementConsolePage = React.lazy(async () => {
-  const mod = await import('../pages/revenue-management/RevenueManagementConsolePage.tsx');
+  const mod = await import('../pages/revenue-management/revenue-management-console-page.tsx');
   return {default: mod.RevenueManagementConsolePage};
 });
 const InfoPage = React.lazy(async () => {
