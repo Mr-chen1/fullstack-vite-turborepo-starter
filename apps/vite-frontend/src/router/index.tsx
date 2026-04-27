@@ -3,14 +3,13 @@ import {createBrowserRouter, Navigate} from 'react-router-dom';
 import {MainLayout} from '@/layouts/MainLayout.tsx';
 import {BareLayout} from '@/layouts/BareLayout.tsx';
 import {ProvidersLayout} from '@/layouts/ProvidersLayout.tsx';
-import {PrivateRoute} from '@/router/PrivateRoute.tsx';
 import {LoadingAnimation} from '@/components/loading-animation/loading-animation.component';
 import {defaultLocale} from '@/i18n/constants.ts';
 import {getLocalePath} from '@/i18n/navigation.ts';
 
-const Home = React.lazy(async () => {
-  const mod = await import('../pages/Home.tsx');
-  return {default: mod.Home};
+const RevenueManagementConsolePage = React.lazy(async () => {
+  const mod = await import('../pages/revenue-management/RevenueManagementConsolePage.tsx');
+  return {default: mod.RevenueManagementConsolePage};
 });
 const InfoPage = React.lazy(async () => {
   const mod = await import('../pages/info-page.tsx');
@@ -65,11 +64,9 @@ export const router = createBrowserRouter([
           {
             index: true,
             element: (
-              <PrivateRoute>
-                <SuspenseWrapper>
-                  <Home />
-                </SuspenseWrapper>
-              </PrivateRoute>
+              <SuspenseWrapper>
+                <RevenueManagementConsolePage />
+              </SuspenseWrapper>
             ),
           },
           {

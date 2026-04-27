@@ -22,6 +22,12 @@ enum UserRole {
   ADMIN
 }
 
+enum RecommendationDecisionStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
+
 model User {
   id           String   @id @default(uuid()) @db.Uuid
   email        String   @unique
@@ -31,4 +37,48 @@ model User {
   updatedAt    DateTime @updatedAt @map("updated_at") @db.Timestamp()
 
   @@map("users")
+}
+
+model Hotel {
+  id              String                  @id @default(uuid()) @db.Uuid
+  name            String
+  district        String
+  createdAt       DateTime                @default(now()) @map("created_at") @db.Timestamp()
+  updatedAt       DateTime                @updatedAt @map("updated_at") @db.Timestamp()
+  roomTypes       RoomType[]
+  recommendations PricingRecommendation[]
+
+  @@map("hotels")
+}
+
+model RoomType {
+  id              String                  @id @default(uuid()) @db.Uuid
+  hotelId         String                  @map("hotel_id") @db.Uuid
+  name            String
+  currentPrice    Int                     @map("current_price")
+  unsoldRooms     Int                     @map("unsold_rooms")
+  createdAt       DateTime                @default(now()) @map("created_at") @db.Timestamp()
+  updatedAt       DateTime                @updatedAt @map("updated_at") @db.Timestamp()
+  hotel           Hotel                   @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  recommendations PricingRecommendation[]
+
+  @@map("room_types")
+}
+
+model PricingRecommendation {
+  id             String                       @id @default(uuid()) @db.Uuid
+  hotelId        String                       @map("hotel_id") @db.Uuid
+  roomTypeId     String                       @map("room_type_id") @db.Uuid
+  currentPrice   Int                          @map("current_price")
+  suggestedPrice Int                          @map("suggested_price")
+  unsoldRooms    Int                          @map("unsold_rooms")
+  reason         String
+  competitorData Json                         @map("competitor_data")
+  decisionStatus RecommendationDecisionStatus @default(PENDING) @map("decision_status")
+  createdAt      DateTime                     @default(now()) @map("created_at") @db.Timestamp()
+  decidedAt      DateTime?                    @map("decided_at") @db.Timestamp()
+  hotel          Hotel                        @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  roomType       RoomType                     @relation(fields: [roomTypeId], references: [id], onDelete: Cascade)
+
+  @@map("pricing_recommendations")
 }

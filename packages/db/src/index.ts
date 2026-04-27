@@ -1,5 +1,11 @@
 export {PrismaClient} from '@prisma/client';
-export type {User} from '@prisma/client';
+export {RecommendationDecisionStatus} from '@prisma/client';
+export type {
+  Hotel,
+  PricingRecommendation,
+  RoomType,
+  User,
+} from '@prisma/client';
 export {
   PrismaClientKnownRequestError,
   PrismaClientValidationError,
