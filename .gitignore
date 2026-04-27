@@ -23,6 +23,7 @@ dist
 
 # Turbo
 .turbo
+.worktrees
 
 # TypeScript
 *.tsbuildinfo
